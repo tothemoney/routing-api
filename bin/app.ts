@@ -1,4 +1,4 @@
-import { ChainId } from '@uniswap/smart-order-router'
+import { ChainId } from '@tmychain/smart-order-router'
 import * as cdk from 'aws-cdk-lib'
 import { CfnOutput, SecretValue, Stack, StackProps, Stage, StageProps } from 'aws-cdk-lib'
 import * as chatbot from 'aws-cdk-lib/aws-chatbot'
@@ -256,6 +256,7 @@ const jsonRpcProviders = {
   WEB3_RPC_80001: process.env.JSON_RPC_PROVIDER_80001!,
   WEB3_RPC_42220: process.env.JSON_RPC_PROVIDER_42220!,
   WEB3_RPC_44787: process.env.JSON_RPC_PROVIDER_44787!,
+  WEB3_RPC_8768: process.env.JSON_RPC_PROVIDER_8768!,
 }
 
 // Local dev stack

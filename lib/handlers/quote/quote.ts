@@ -9,7 +9,7 @@ import {
   routeAmountsToString,
   SwapOptions,
   SwapRoute,
-} from '@uniswap/smart-order-router'
+} from '@tmychain/smart-order-router'
 import { Pool } from '@uniswap/v3-sdk'
 import JSBI from 'jsbi'
 import _ from 'lodash'
@@ -207,8 +207,7 @@ export class QuoteHandler extends APIGLambdaHandler<
             type,
             routingConfig: routingConfig,
           },
-          `Exact In Swap: Give ${amount.toExact()} ${amount.currency.symbol}, Want: ${
-            currencyOut.symbol
+          `Exact In Swap: Give ${amount.toExact()} ${amount.currency.symbol}, Want: ${currencyOut.symbol
           }. Chain: ${chainId}`
         )
 
@@ -231,8 +230,7 @@ export class QuoteHandler extends APIGLambdaHandler<
             type,
             routingConfig: routingConfig,
           },
-          `Exact Out Swap: Want ${amount.toExact()} ${amount.currency.symbol} Give: ${
-            currencyIn.symbol
+          `Exact Out Swap: Want ${amount.toExact()} ${amount.currency.symbol} Give: ${currencyIn.symbol
           }. Chain: ${chainId}`
         )
 

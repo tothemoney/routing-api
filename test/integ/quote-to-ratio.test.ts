@@ -13,7 +13,7 @@ import {
   USDC_MAINNET,
   USDT_MAINNET,
   WBTC_MAINNET,
-} from '@uniswap/smart-order-router'
+} from '@tmychain/smart-order-router'
 import { MethodParameters, Pool, Position } from '@uniswap/v3-sdk'
 import { fail } from 'assert'
 import axios, { AxiosResponse } from 'axios'
@@ -308,7 +308,7 @@ describe('quote-to-ratio', async function () {
 
   before('generate blockchain fork', async function () {
     this.timeout(40000)
-    ;[alice] = await ethers.getSigners()
+      ;[alice] = await ethers.getSigners()
 
     // Make a dummy call to the API to get a block number to fork from.
     const quoteToRatioRec: QuoteToRatioQueryParams = DEFAULT_QUERY_PARAMS
@@ -338,98 +338,98 @@ describe('quote-to-ratio', async function () {
     zeroForOne: boolean
     requestParams: QuoteToRatioQueryParams
   }[] = [
-    {
-      testCase: 'erc20 -> erc20 low volume trade token0Excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: true,
-      requestParams: DEFAULT_QUERY_PARAMS,
-    },
-    {
-      testCase: 'erc20 -> erc20 high volume trade token0Excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: true,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token0Balance: parseAmount('1000000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('2000', USDC_MAINNET).quotient.toString(),
-        slippageTolerance: '0.05',
+      {
+        testCase: 'erc20 -> erc20 low volume trade token0Excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: true,
+        requestParams: DEFAULT_QUERY_PARAMS,
       },
-    },
-    {
-      testCase: 'erc20 -> erc20 low volume trade token1Excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: false,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('5000', USDC_MAINNET).quotient.toString(),
+      {
+        testCase: 'erc20 -> erc20 high volume trade token0Excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: true,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token0Balance: parseAmount('1000000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('2000', USDC_MAINNET).quotient.toString(),
+          slippageTolerance: '0.05',
+        },
       },
-    },
-    {
-      testCase: 'erc20 -> erc20 high volume trade token1Excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: false,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('2000000', USDC_MAINNET).quotient.toString(),
+      {
+        testCase: 'erc20 -> erc20 low volume trade token1Excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: false,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('5000', USDC_MAINNET).quotient.toString(),
+        },
       },
-    },
-    {
-      testCase: 'erc20 -> erc20 range order position token0 excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: true,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token0Balance: parseAmount('50000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('2000', USDC_MAINNET).quotient.toString(),
-        tickLower: -286420,
-        tickUpper: -276420,
+      {
+        testCase: 'erc20 -> erc20 high volume trade token1Excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: false,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('2000000', USDC_MAINNET).quotient.toString(),
+        },
       },
-    },
-    {
-      testCase: 'erc20 -> erc20 range order position token1 excess',
-      token0: DAI_MAINNET,
-      token1: USDC_MAINNET,
-      zeroForOne: false,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('50000', USDC_MAINNET).quotient.toString(),
-        tickLower: 0,
-        tickUpper: 60,
+      {
+        testCase: 'erc20 -> erc20 range order position token0 excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: true,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token0Balance: parseAmount('50000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('2000', USDC_MAINNET).quotient.toString(),
+          tickLower: -286420,
+          tickUpper: -276420,
+        },
       },
-    },
-    {
-      testCase: 'erc20 -> eth',
-      token0: DAI_MAINNET,
-      token1: Ether.onChain(1),
-      zeroForOne: true,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token1Address: 'ETH',
-        token0Balance: parseAmount('10000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('1', WETH9[1]).quotient.toString(),
+      {
+        testCase: 'erc20 -> erc20 range order position token1 excess',
+        token0: DAI_MAINNET,
+        token1: USDC_MAINNET,
+        zeroForOne: false,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token0Balance: parseAmount('2000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('50000', USDC_MAINNET).quotient.toString(),
+          tickLower: 0,
+          tickUpper: 60,
+        },
       },
-    },
-    {
-      testCase: 'eth -> erc20',
-      token0: DAI_MAINNET,
-      token1: Ether.onChain(1),
-      zeroForOne: false,
-      requestParams: {
-        ...DEFAULT_QUERY_PARAMS,
-        token1Address: 'ETH',
-        token0Balance: parseAmount('1000', DAI_MAINNET).quotient.toString(),
-        token1Balance: parseAmount('3', Ether.onChain(1)).quotient.toString(),
+      {
+        testCase: 'erc20 -> eth',
+        token0: DAI_MAINNET,
+        token1: Ether.onChain(1),
+        zeroForOne: true,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token1Address: 'ETH',
+          token0Balance: parseAmount('10000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('1', WETH9[1]).quotient.toString(),
+        },
       },
-    },
-  ]
+      {
+        testCase: 'eth -> erc20',
+        token0: DAI_MAINNET,
+        token1: Ether.onChain(1),
+        zeroForOne: false,
+        requestParams: {
+          ...DEFAULT_QUERY_PARAMS,
+          token1Address: 'ETH',
+          token0Balance: parseAmount('1000', DAI_MAINNET).quotient.toString(),
+          token1Balance: parseAmount('3', Ether.onChain(1)).quotient.toString(),
+        },
+      },
+    ]
 
   for (const { testCase, token0, token1, zeroForOne, requestParams } of SUCCESS_TEST_CASES) {
     describe(testCase, () => {
@@ -557,143 +557,143 @@ describe('quote-to-ratio', async function () {
         }
       }
     }[] = [
-      {
-        testCase: 'when both balances are 0',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Balance: '0',
-          token1Balance: '0',
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'No swap needed',
-            errorCode: 'NO_SWAP_NEEDED',
+        {
+          testCase: 'when both balances are 0',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Balance: '0',
+            token1Balance: '0',
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'No swap needed',
+              errorCode: 'NO_SWAP_NEEDED',
+            },
           },
         },
-      },
-      {
-        testCase: 'when max iterations is 0',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          maxIterations: 0,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: '"maxIterations" must be larger than or equal to 1',
-            errorCode: 'VALIDATION_ERROR',
+        {
+          testCase: 'when max iterations is 0',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            maxIterations: 0,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: '"maxIterations" must be larger than or equal to 1',
+              errorCode: 'VALIDATION_ERROR',
+            },
           },
         },
-      },
-      {
-        testCase: 'when ratio is already fulfilled with token1',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Balance: parseAmount('0', DAI_MAINNET).quotient.toString(),
-          token1Balance: parseAmount('5000', USDC_MAINNET).quotient.toString(),
-          tickLower: -286420,
-          tickUpper: -276420,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'No swap needed for range order',
-            errorCode: 'NO_SWAP_NEEDED',
+        {
+          testCase: 'when ratio is already fulfilled with token1',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Balance: parseAmount('0', DAI_MAINNET).quotient.toString(),
+            token1Balance: parseAmount('5000', USDC_MAINNET).quotient.toString(),
+            tickLower: -286420,
+            tickUpper: -276420,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'No swap needed for range order',
+              errorCode: 'NO_SWAP_NEEDED',
+            },
           },
         },
-      },
-      {
-        testCase: 'when ratio is already fulfilled with token0',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Balance: parseAmount('50000', DAI_MAINNET).quotient.toString(),
-          token1Balance: parseAmount('0', USDC_MAINNET).quotient.toString(),
-          tickLower: 0,
-          tickUpper: 60,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'No swap needed for range order',
-            errorCode: 'NO_SWAP_NEEDED',
+        {
+          testCase: 'when ratio is already fulfilled with token0',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Balance: parseAmount('50000', DAI_MAINNET).quotient.toString(),
+            token1Balance: parseAmount('0', USDC_MAINNET).quotient.toString(),
+            tickLower: 0,
+            tickUpper: 60,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'No swap needed for range order',
+              errorCode: 'NO_SWAP_NEEDED',
+            },
           },
         },
-      },
-      {
-        testCase: 'amount exceeds uint256',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Balance:
-            '100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: '"token0Balance" length must be less than or equal to 77 characters long',
-            errorCode: 'VALIDATION_ERROR',
+        {
+          testCase: 'amount exceeds uint256',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Balance:
+              '100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: '"token0Balance" length must be less than or equal to 77 characters long',
+              errorCode: 'VALIDATION_ERROR',
+            },
           },
         },
-      },
-      {
-        testCase: 'with unknown token',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Address: 'UNKNOWNTOKEN',
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'Could not find token with address "UNKNOWNTOKEN"',
-            errorCode: 'TOKEN_0_INVALID',
+        {
+          testCase: 'with unknown token',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Address: 'UNKNOWNTOKEN',
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'Could not find token with address "UNKNOWNTOKEN"',
+              errorCode: 'TOKEN_0_INVALID',
+            },
           },
         },
-      },
-      {
-        testCase: 'when tokens are the same',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Address: DAI_MAINNET.address,
-          token1Address: DAI_MAINNET.address,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'token0 and token1 must be different',
-            errorCode: 'TOKEN_0_1_SAME',
+        {
+          testCase: 'when tokens are the same',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Address: DAI_MAINNET.address,
+            token1Address: DAI_MAINNET.address,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'token0 and token1 must be different',
+              errorCode: 'TOKEN_0_1_SAME',
+            },
           },
         },
-      },
-      {
-        testCase: 'when token are out of order',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          token0Address: USDC_MAINNET.address,
-          token1Address: DAI_MAINNET.address,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'token0 address must be less than token1 address',
-            errorCode: 'TOKENS_MISORDERED',
+        {
+          testCase: 'when token are out of order',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            token0Address: USDC_MAINNET.address,
+            token1Address: DAI_MAINNET.address,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'token0 address must be less than token1 address',
+              errorCode: 'TOKENS_MISORDERED',
+            },
           },
         },
-      },
-      {
-        testCase: 'when tick is not a multiple of target pool tick spacing',
-        requestParams: {
-          ...DEFAULT_QUERY_PARAMS,
-          tickLower: -44,
-        },
-        result: {
-          status: 400,
-          data: {
-            detail: 'tickLower and tickUpper must comply with the tick spacing of the target pool',
-            errorCode: 'INVALID_TICK_SPACING',
+        {
+          testCase: 'when tick is not a multiple of target pool tick spacing',
+          requestParams: {
+            ...DEFAULT_QUERY_PARAMS,
+            tickLower: -44,
+          },
+          result: {
+            status: 400,
+            data: {
+              detail: 'tickLower and tickUpper must comply with the tick spacing of the target pool',
+              errorCode: 'INVALID_TICK_SPACING',
+            },
           },
         },
-      },
-    ]
+      ]
 
     for (const { testCase, requestParams, result } of ERROR_TEST_CASES) {
       it(testCase, async () => {

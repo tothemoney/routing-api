@@ -9,7 +9,7 @@ import {
   SwapAndAddConfig,
   SwapAndAddOptions,
   SwapToRatioStatus,
-} from '@uniswap/smart-order-router'
+} from '@tmychain/smart-order-router'
 import { Position } from '@uniswap/v3-sdk'
 import JSBI from 'jsbi'
 import { APIGLambdaHandler, ErrorResponse, HandleRequestParams, Response } from '../handler'
@@ -420,8 +420,8 @@ export class QuoteToRatioHandler extends APIGLambdaHandler<
         token1BalanceUpdated.numerator.toString() == '0'
           ? `0.${'0'.repeat(token1.wrapped.decimals)}`
           : new Fraction(token0BalanceUpdated.quotient.toString(), token1BalanceUpdated.quotient.toString()).toFixed(
-              token0.wrapped.decimals
-            )
+            token0.wrapped.decimals
+          )
     }
 
     const postSwapTargetPoolObject = {

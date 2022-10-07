@@ -1,5 +1,5 @@
 import { Protocol } from '@uniswap/router-sdk'
-import { ChainId, V2SubgraphProvider, V3SubgraphProvider } from '@uniswap/smart-order-router'
+import { ChainId, V2SubgraphProvider, V3SubgraphProvider } from '@tmychain/smart-order-router'
 
 export const chainProtocols = [
   // V3.
@@ -32,6 +32,11 @@ export const chainProtocols = [
     protocol: Protocol.V3,
     chainId: ChainId.CELO,
     provider: new V3SubgraphProvider(ChainId.CELO, 3, 90000),
+  },
+  {
+    protocol: Protocol.V3,
+    chainId: ChainId.TMY_MAINNET,
+    provider: new V3SubgraphProvider(ChainId.TMY_MAINNET, 3, 90000),
   },
   // Currently there is no working V3 subgraph for Kovan, Optimism, Optimism Kovan, Arbitrum Rinkeby, so we use static providers.
   // V2.
